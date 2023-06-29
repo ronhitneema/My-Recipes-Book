@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gather: User Profile</title>
+        <!-- Bootstrap core CSS -->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+        <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- API Gateway Generated SDK -->
+    <script src="./assets/js/profile/sdk/lib/axios/dist/axios.standalone.js"></script>
+    <script src="./assets/js/profile/sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script src="./assets/js/profile/sdk/lib/CryptoJS/rollups/sha256.js"></script>
+    <script src="./assets/js/profile/sdk/lib/CryptoJS/components/hmac.js"></script>
+    <script src="./assets/js/profile/sdk/lib/CryptoJS/components/enc-base64.js"></script>
+    <script src="./assets/js/profile/sdk/lib/url-template/url-template.js"></script>
+    <script src="./assets/js/profile/sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script src="./assets/js/profile/sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script src="./assets/js/profile/sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script src="./assets/js/profile/sdk/lib/apiGatewayCore/utils.js"></script>
+
+    <script src="./assets/js/profile/sdk/apigClient.js"></script>
+    <script src="./assets/js/profile/profileLoad.js"></script>
+
+    <!-- AWS SDK & Cognito -->
+    <script src="./js/aws/amazon-cognito-identity.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.211.1.min.js"></script>
+    <script src="./js/config.js"></script>
+
+    <style>
+        figure, p:hover{
+                cursor:pointer;
+            }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+        <div class = "container-fluid">
+            <a class="navbar-brand" href="#"><img src = "images/logo.png" style=width:50px;margin:-5px></a>
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="userprofile.html">Profile <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="search.html">Search</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="addrecipe.html">Add Recipe</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="chat.html">Chat</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="recommendations.html">Recommendations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="barter.html">Barter</a>
+                </li>
+                <li class="btn" style="float: right;">
+                    <button type="button" class="btn btn-outline-dark btn-sm btn-block" onclick="signOut()">Sign Out</button>
+                </li>
+              </ul>
+        </div>
+    </nav>
+    <div class="row py-5 px-4">
+        <div class="col-md-5 mx-auto">
+            <!-- Profile widget -->
+            <div class="bg-white shadow rounded overflow-hidden">
+                <div class="px-4 pt-0 pb-4 cover">
+                    <div class="media align-items-end profile-head">
+                        <div class="profile mr-3">
+                            <img src="https://st3.depositphotos.com/6139382/18540/v/1600/depositphotos_185402170-stock-illustration-cute-girl-pancakes-video-blogger.jpg" alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                            <a href="#" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
+                        </div>
+                        <div class="media-body mb-5 text-white">
+                            <h4 class="mt-0 mb-0" id='username' style='color: black;'></h4>
+                            <p class="small mb-3"  style='color: black;'>New York</p>
+<!--                            <p class="small mb-4"> <i class="fas fa-map-marker-alt mr-2"></i>New York</p>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-light p-4 d-flex justify-content-end text-center">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item">
+                            <h5 class="font-weight-bold mb-0 d-block" id="recipe_count">215</h5><small class="text-muted"> <i class="fas fa-image mr-1"></i>Recipes</small>
+                        </li>
+                        <li class="list-inline-item">
+                            <h5 class="font-weight-bold mb-0 d-block">745</h5><small class="text-muted"> <i class="fas fa-user mr-1"></i>Followers</small>
+                        </li>
+                        <li class="list-inline-item">
+                            <h5 class="font-weight-bold mb-0 d-block">340</h5><small class="text-muted"> <i class="fas fa-user mr-1"></i>Following</small>
+                        </li>
+                    </ul>
+                </div>
+                <div class="px-4 py-3">
+                    <h5 class="mb-0">About</h5>
+                    <br>
+                    <div class="p-4 rounded shadow-sm bg-light">
+                        <p class="font-italic mb-0">Hi everyone! I just started cooking a few years ago and my favorite cuisine is Japanese. Please message me if you've any questions about my recipes!</p>
+                    </div>
+                </div>
+
+                <!--addingrecipes-->
+                <div class="py-4 px-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h5 class="mb-0">Recent Recipes</h5><a href="#" class="btn btn-link text-muted">Show all</a>
+                    </div>
+
+
+
+                    <div class="row" >
+                        <div class="col-lg-6 mb-2 pr-lg-1" id="recipe-rows"></div>
+
+                    </div>
+                </div>
+
+                <!--endofaddingrecipes-->
+
+                <!--adding Fav recipes-->
+                <div class="py-4 px-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h5 class="mb-0">Recent Recipes</h5><a href="#" class="btn btn-link text-muted">Show all</a>
+                    </div>
+
+                    <div class="row" >
+                        <div class="col-lg-6 mb-2 pr-lg-1" id="fav-recipe-rows"></div>
+
+                    </div>
+                </div>
+
+                <!--endofadding Fav recipes-->
+
+        </div>
+
+
+
+    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+    <script>
+        let data = {
+            UserPoolId: config.cognito.userPoolId,
+            ClientId: config.cognito.clientId
+        };
+        console.log("DATA", data)
+
+
+        let CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool
+        console.log('cognito user pool', CognitoUserPool)
+
+        let userPool =  new AmazonCognitoIdentity.CognitoUserPool(data)
+        let cognitoUser = userPool.getCurrentUser();
+
+        console.log("USER POOL", userPool)
+        console.log("cognito user", cognitoUser)
+
+        // Get username from Cognito
+        document.getElementById("username").innerHTML = cognitoUser.username;
+
+        function signOut(){
+            if (cognitoUser != null){
+                cognitoUser.signOut();
+                window.open("login.html","_self");
+            }
+        }
+    </script>
+
+    </body>
+</html>

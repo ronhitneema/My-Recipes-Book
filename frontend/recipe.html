@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Basic meta info
+  ==================== -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title id="top-title">Barbecue Pork Ribs</title>
+
+  <!-- Favicon
+  ============ -->
+  <link rel="apple-touch-icon" sizes="57x57" href="images/favicon/apple-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="60x60" href="images/favicon/apple-icon-60x60.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="images/favicon/apple-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="images/favicon/apple-icon-76x76.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="images/favicon/apple-icon-114x114.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="images/favicon/apple-icon-120x120.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="images/favicon/apple-icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="images/favicon/apple-icon-152x152.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-icon-180x180.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="images/favicon/android-icon-192x192.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon/favicon-16x16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="images/favicon/favicon-96x96.png" />
+
+  <!-- CSS files
+  ============== -->
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <link rel="stylesheet" type="text/css" href="css/reset.css" />
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/animate.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/styles.css" />
+
+  <!-- Modernizr file
+  =================== -->
+  <script charset="utf-8" type="text/javascript " src="js/modernizr.custom.js"></script>
+
+  <!-- API Gateway Generated SDK -->
+  <script src="./assets/js/searchid/sdk/lib/axios/dist/axios.standalone.js"></script>
+  <script src="./assets/js/searchid/sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+  <script src="./assets/js/searchid/sdk/lib/CryptoJS/rollups/sha256.js"></script>
+  <script src="./assets/js/searchid/sdk/lib/CryptoJS/components/hmac.js"></script>
+  <script src="./assets/js/searchid/sdk/lib/CryptoJS/components/enc-base64.js"></script>
+  <script src="./assets/js/searchid/sdk/lib/url-template/url-template.js"></script>
+  <script src="./assets/js/searchid/sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+  <script src="./assets/js/searchid/sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+  <script src="./assets/js/searchid/sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+  <script src="./assets/js/searchid/sdk/lib/apiGatewayCore/utils.js"></script>
+
+  <script src="./assets/js/searchid/sdk/apigClient.js"></script>
+
+  <!-- AWS SDK -->
+  <script src="./js/aws/amazon-cognito-identity.min.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.874.0.min.js"></script>
+  <script src="./js/config.js"></script>
+
+</head>
+
+<body>
+  <!-- Splash Screen
+  ================== -->
+  <div id="splash"></div>
+
+  <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"><img src="images/logo.png" style=width:50px;margin:-5px></a>
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="userprofile.html">Profile <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="search.html">Search</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="add-recipe-nav-button" href="addrecipe.html">Add Recipe</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="chat.html">Chat</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="recommendations-nav-button" href="recommendations.html">Recommendations</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="bartor-nav-button" href="barter.html">Barter</a>
+        </li>
+        <li class="btn" style="float: right;">
+          <button type="button" class="btn btn-outline-dark btn-sm btn-block" id="sign-out-nav-button"
+            onclick="signOut()">Sign Out</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Recipe Section
+  =================== -->
+  <section id="recipe">
+    <div class="container">
+      <div class="row">
+        <!-- Title -->
+        <div class="col-12">
+          <h2 id="recipe-title"></h2>
+        </div>
+      </div>
+      <div class="row vertical-align">
+        <div class="col-12">
+          <!-- Picture -->
+          <div class="col-md-8 pull-left wow swing">
+            <img id="recipe-image" src="images/default-food.jpg" alt="defaultfood-image" class="recipe-picture" />
+          </div>
+          <!-- Info -->
+          <div class="col-md-4 pull-right wow lightSpeedIn">
+            <div class="recipe-info">
+              <h3>Info</h3>
+              <button type="submit" class="btn btn-light" id="save-recipe-button" onclick=saveReciepe()>Save Recipe</button>
+              <!-- Maker Username -->
+              <div class="row" id="user-name-row">
+                <div class="col-2 text-center">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                </div>
+                <div class="col-10" id="user-name-link"></div>
+              </div>
+              <!-- Time -->
+              <div class="row">
+                <div class="col-2 text-center">
+                  <i class="fa fa-clock-o" aria-hidden="true"></i>
+                </div>
+                <div class="col-6">Time</div>
+                <div class="col-4">3:00 H</div>
+              </div>
+              <!-- Difficulty -->
+              <div class="row">
+                <div class="col-2 text-center">
+                  <i class="fa fa-area-chart" aria-hidden="true"></i>
+                </div>
+                <div class="col-6">Difficulty</div>
+                <div class="col-4">
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                  <i class="fa fa-star" aria-hidden="true"></i>
+                </div>
+              </div>
+              <!-- Serves -->
+              <div class="row">
+                <div class="col-2 text-center">
+                  <i class="fa fa-users" aria-hidden="true"></i>
+                </div>
+                <div class="col-6">Servings</div>
+                <div class="col-4">5</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Ingredients -->
+      <div class="row wow slideInUp">
+        <div class="col-12">
+          <div class="recipe-ingredients">
+            <h3>Ingredients</h3>
+            <dl class="ingredients-list" id="ingredients-one-by-one">
+
+            </dl>
+          </div>
+        </div>
+      </div>
+      <!-- Directions -->
+      <div class="row wow slideInUp">
+        <div class="col-12">
+          <div class="recipe-directions">
+            <h3 id="directions-step">Directions</h3>
+
+          </div>
+        </div>
+      </div>
+      <!-- Back to recipes -->
+
+    </div>
+  </section>
+  <!-- JavaScript files
+  ===================== -->
+  <script charset="utf-8" src="js/jquery-3.3.1.min.js"></script>
+  <script charset="utf-8" src="js/bootstrap.min.js"></script>
+  <script charset="utf-8" src="js/wow.min.js"></script>
+  <script charset="utf-8" src="js/scripts.js"></script>
+  <script charset="utf-8" src="js/recipejs.js"></script>
+</body>
+
+</html>

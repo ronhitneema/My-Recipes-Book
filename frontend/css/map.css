@@ -1,0 +1,8 @@
+.mapboxgl-marker{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border:1px solid gray;
+    background-image: url('https://www.pngitem.com/pimgs/m/195-1951596_western-style-food-symbol-related-to-food-hd.png');
+    background-size: cover;
+}

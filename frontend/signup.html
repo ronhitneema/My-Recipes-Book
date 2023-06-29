@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gather</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
+
+    <!-- AWS SDK -->
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="./js/aws/amazon-cognito-auth.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.874.0.min.js"></script>
+    <script src="./js/aws/amazon-cognito-identity.min.js"></script>
+    <script src="./js/config.js"></script>
+    <!-- <script src="./assets/js/aws-sdk.min.js"></script> -->
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+      <div class = "container-fluid">
+          <a class="navbar-brand" href="#"><img src = "images/logo.png" style=width:50px;margin:-5px></a>
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li class="nav-item active">
+                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="userprofile.html">Profile <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="search.html">Search</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="addrecipe.html">Add Recipe</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="chat.html">Chat</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="recommendations.html">Recommendations</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="barter.html">Barter</a>
+              </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Sign up -->
+    <form class="form-signin text-center">
+        <img class="mb-4" src="images/avatar.png" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input type="text" id="inputUsername" class="form-control" placeholder="Username" required="" autofocus="">
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+        <button class="btn btn-lg btn-secondary btn-block" type="button" onclick=registerButton(event)>Sign up</button>
+    </form>
+
+    <script>
+
+      let username;
+      let password;
+      let personalName;
+      let poolData;
+
+      function registerButton(e){
+        e.preventDefault();
+
+        username = document.getElementById("inputUsername").value
+        email = document.getElementById("inputEmail").value
+        password = document.getElementById("inputPassword").value
+
+        let poolData = {
+          UserPoolId: config.cognito.userPoolId,
+          ClientId: config.cognito.clientId,
+        };
+
+        let userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+
+        let attributeList = [];
+
+        let dataEmail = {
+          Name: 'email',
+          Value: email,
+        };
+
+        let dataUsername = {
+          Name: 'name',
+          Value: username
+        }
+
+        let attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail)
+        let attributeUsername = new AmazonCognitoIdentity.CognitoUserAttribute(dataUsername)
+
+        attributeList.push(attributeEmail)
+        attributeList.push(attributeUsername)
+
+        userPool.signUp(email, password, attributeList, null, function(err, result){
+          if (err) {
+            alert(err.message || JSON.stringify(err));
+            return;
+          }
+          cognitoUser = result.user;
+          console.log('username is' + cognitoUser.getUsername());
+
+          // need to verify....
+          // Reference: https://www.youtube.com/watch?v=pDMkL2cObC0&ab_channel=NikhilRaoNikhilRao
+
+        })
+      }
+
+    </script>
+
+</body>
+</html>

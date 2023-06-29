@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barter Form</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+
+    <!-- API Gateway Generated SDK -->
+    <script src="./assets/js/barterform/sdk/lib/axios/dist/axios.standalone.js"></script>
+    <script src="./assets/js/barterform/sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script src="./assets/js/barterform/sdk/lib/CryptoJS/rollups/sha256.js"></script>
+    <script src="./assets/js/barterform/sdk/lib/CryptoJS/components/hmac.js"></script>
+    <script src="./assets/js/barterform/sdk/lib/CryptoJS/components/enc-base64.js"></script>
+    <script src="./assets/js/barterform/sdk/lib/url-template/url-template.js"></script>
+    <script src="./assets/js/barterform/sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script src="./assets/js/barterform/sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script src="./assets/js/barterform/sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script src="./assets/js/barterform/sdk/lib/apiGatewayCore/utils.js"></script>
+
+    <script src="./assets/js/barterform/sdk/apigClient.js"></script>
+
+
+        <!-- AWS SDK & Cognito -->
+    <script src="./js/aws/amazon-cognito-identity.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.211.1.min.js"></script>
+    <script src="./js/config.js"></script>
+
+    <script src="index.js"></script>
+
+    <style>
+      html, body {
+      min-height: 100%;
+      }
+      body, div, form, input, select, textarea, p {
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 14px;
+      color: #666;
+      line-height: 22px;
+      }
+      h1 {
+      position: absolute;
+      margin: 0;
+      font-size: 32px;
+      color: #fff;
+      z-index: 2;
+      }
+      .testbox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: inherit;
+      padding: 20px;
+      }
+      form {
+      width: 100%;
+      padding: 20px;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 0 30px 0;
+      margin-top: auto;
+      }
+      .banner {
+      position: relative;
+      height: 210px;
+      background-image: url("images/barter-photo.jpeg");
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      }
+      .banner::after {
+      content: "";
+      background-color: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      }
+      p.top-info {
+      margin: 10px 0;
+      }
+      input, select, textarea {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      }
+      input {
+      width: calc(100% - 10px);
+      padding: 5px;
+      }
+      select {
+      width: 100%;
+      padding: 7px 0;
+      background: transparent;
+      }
+      textarea {
+      width: calc(100% - 12px);
+      padding: 5px;
+      }
+      .item:hover p, .item:hover i, .question:hover p, .question label:hover, input:hover::placeholder {
+      color: #a4dab5;
+      }
+      /*.item input:hover, .item select:hover, .item textarea:hover {*/
+      /*border: 1px solid transparent;*/
+      /*box-shadow: 0 0 8px 0 #8ebf42;*/
+      /*color: #8ebf42;*/
+      /*}*/
+      .item {
+      position: relative;
+      margin: 10px 0;
+      }
+      input[type="date"]::-webkit-inner-spin-button {
+      display: none;
+      }
+      .item i, input[type="date"]::-webkit-calendar-picker-indicator {
+      position: absolute;
+      font-size: 20px;
+      color: #a9a9a9;
+      }
+      .item i {
+      right: 2%;
+      top: 30px;
+      z-index: 1;
+      }
+      [type="date"]::-webkit-calendar-picker-indicator {
+      right: 1%;
+      z-index: 2;
+      opacity: 0;
+      cursor: pointer;
+      }
+      input[type=radio] {
+      width: 0;
+      visibility: hidden;
+      }
+      label.radio {
+      position: relative;
+      display: inline-block;
+      margin: 5px 20px 25px 0;
+      cursor: pointer;
+      }
+      .question span {
+      margin-left: 30px;
+      }
+      label.radio:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      border: 2px solid #8ebf42;
+      }
+      label.radio:after {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 4px;
+      top: 6px;
+      left: 5px;
+      background: transparent;
+      border: 3px solid #8ebf42;
+      border-top: none;
+      border-right: none;
+      transform: rotate(-45deg);
+      opacity: 0;
+      }
+      input[type=radio]:checked + label:after {
+      opacity: 1;
+      }
+      .btn-block {
+      margin-top: 10px;
+      text-align: center;
+      }
+      button {
+      width: 150px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #a4dab5;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      }
+      button:hover {
+      background: #a1d67a;
+      }
+      @media (min-width: 568px) {
+      .name-item, .city-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      }
+      .name-item input, .city-item input {
+      width: calc(50% - 20px);
+      }
+      .city-item select {
+      width: calc(50% - 8px);
+      }
+      }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+      <div class = "container-fluid">
+          <a class="navbar-brand" href="#"><img src = "images/logo.png" style=width:50px;margin:-5px></a>
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li class="nav-item active">
+                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="userprofile.html">Profile <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="search.html">Search</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="addrecipe.html">Add Recipe</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="chat.html">Chat</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="recommendations.html">Recommendations</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="barter.html">Barter</a>
+              </li>
+              <li class="btn" style="float: right;">
+          <button type="button" class="btn btn-outline-dark btn-sm btn-block" id="sign-out-nav-button"
+            onclick="signOut()">Sign Out</button>
+                </li>
+          </ul>
+      </div>
+    </nav>
+
+<!--    Form-->
+<div class="testbox">
+      <form id="barter-form">
+        <div class="banner">
+          <h1>Barter Form</h1>
+        </div>
+        <div class="item">
+          <div class="name-item">
+            <label for="recipes">Recipe</label>
+                <select id="recipes" name="recipes">
+                </select>
+          </div>
+        </div>
+        <div class="item">
+          <p>Username</p>
+          <div class="name-item">
+            <input id="username" type="text" name="username" placeholder="Username">
+          </div>
+        </div>
+        <div class="item">
+          <p>Barter Date</p>
+          <input id="date" type="date" name="bdate" required/>
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <div class="item">
+          <p>Please write any additional comments on your dish</p>
+          <textarea id="comments" rows="3"></textarea>
+        </div>
+        <div class="item">
+          <p>Phone Number</p>
+          <input id="phone" type="text" name="name" required/>
+        </div>
+        <div class="item">
+          <p>Address</p>
+          <input id="address" type="text" name="name" placeholder="Full Street Address" required/>
+          <input id="city" type="text" name="name" placeholder="City" required/>
+          <input id="state" type="text" name="name" placeholder="State" required/>
+          <input id="zip" type="text" name="name" placeholder="Zipcode" required/>
+        </div>
+        <div class="btn-block">
+          <form action="barter.html">
+          <button type="button" onclick="addBarter(event)">Submit</button>
+          </form>
+        </div>
+      </form>
+    </div>
+
+    <script src="barterform.js"></script>
+
+</body>
+</html>

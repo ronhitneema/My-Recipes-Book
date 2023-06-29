@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barter</title>
+
+    <!--Mapbox-->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css' rel='stylesheet' />
+
+    <!-- Bootstrap core CSS -->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
+    <link href="css/map.css" rel="stylesheet">
+
+<!--    mapbox sdk-->
+    <script src="./assets/js/bartermap/sdk/lib/axios/dist/axios.standalone.js"></script>
+    <script src="./assets/js/bartermap/sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script src="./assets/js/bartermap/sdk/lib/CryptoJS/rollups/sha256.js"></script>
+    <script src="./assets/js/bartermap/sdk/lib/CryptoJS/components/hmac.js"></script>
+    <script src="./assets/js/bartermap/sdk/lib/CryptoJS/components/enc-base64.js"></script>
+    <script src="./assets/js/bartermap/sdk/lib/url-template/url-template.js"></script>
+    <script src="./assets/js/bartermap/sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script src="./assets/js/bartermap/sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script src="./assets/js/bartermap/sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script src="./assets/js/bartermap/sdk/lib/apiGatewayCore/utils.js"></script>
+
+    <script src="./assets/js/bartermap/sdk/apigClient.js"></script>
+
+
+    <!-- AWS SDK -->
+    <script src="./js/aws/amazon-cognito-identity.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.211.1.min.js"></script>
+    <script src="./js/config.js"></script>
+
+    <script src="bartermap.js"></script>
+    <script src="index.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+    body { margin: 0; padding: 0; }
+    #map { position: absolute; top: 10%; bottom: 0; left: 25%; width: 100%; }
+
+
+
+</style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+      <div class = "container-fluid">
+          <a class="navbar-brand" href="#"><img src = "images/logo.png" style=width:50px;margin:-5px></a>
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li class="nav-item active">
+                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="userprofile.html">Profile <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="search.html">Search</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="addrecipe.html">Add Recipe</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="chat.html">Chat</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="recommendations.html">Recommendations</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="barter.html">Barter</a>
+              </li>
+              <li class="btn" style="float: right;">
+          <button type="button" class="btn btn-outline-dark btn-sm btn-block" id="sign-out-nav-button"
+            onclick="signOut()">Sign Out</button>
+                </li>
+          </ul>
+      </div>
+    </nav>
+
+    <div><a href="barter_form.html"><button1 class="big-button">Submit A Barter</button1></a></div>
+
+    <div id='map' style='transform: translate(0%,20%);width: 750px; height: 750px;'></div>
+
+</body>
+</html>
