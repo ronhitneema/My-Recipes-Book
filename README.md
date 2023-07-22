@@ -41,6 +41,7 @@ Overall, the architecture of the My Recipes Book project combines backend AWS La
 - Chatbot: The chatbot feature enables users to interact with a conversational agent to get recipe recommendations, ask cooking-related questions, or receive assistance with their culinary endeavors. The chatbot supports both text-based and voice-based interactions.
 - Recommendation system: Powered by Amazon Personalize, the recommendation system analyzes user preferences and provides personalized recipe suggestions based on their previous interactions and saved recipes.
 - Barter: The barter feature allows users to arrange meetups for food exchange. They can connect with other users interested in trading their homemade dishes, fostering a sense of community and culinary exploration.
+- Payment Gateway: Integration with stripe for sellers to get money for there recipes
 
 ## Tech Stack
 - Backend: AWS Lambda, Python
@@ -57,16 +58,16 @@ The project's folder structure is organized as follows:
 
 - `.idea`: Directory containing project-specific configurations and settings.
 - `Spoonacular`: Directory with recipe-related functionalities and user profiles.
-- `load-recipe-mapbox`: Directory housing Lambda functions created by Bornita, responsible for handling recipe loading and map-related operations.
+- `load-recipe-mapbox`: Directory housing Lambda functions, responsible for handling recipe loading and map-related operations.
 - `recipe_insert`: Directory for updating the Lambda function responsible for inserting recipes.
 - `recipe_search`: Directory for updating the Lambda function responsible for recipe searches.
 - `save_recipe`: Directory for updating the Lambda function responsible for saving recipes.
 - `search-recipe-ID`: Directory for updating the Lambda function responsible for searching recipes by ID.
 - `add_new_recipe2.py`: File containing fixes for search and add recipe Lambda functions.
-- `barterNotification.py`: File containing Lambda functions created by Bornita, handling barter-related notifications.
+- `barterNotification.py`: File containing Lambda functions, handling barter-related notifications.
 - `load-fav.py`: File for updating the `load-fav` Lambda function.
-- `load-profile.py`: File containing Lambda functions created by Bornita, linking user profiles to recipes.
-- `load-recipe.py`: File containing Lambda functions created by Bornita, handling recipe loading.
+- `load-profile.py`: File containing Lambda functions, linking user profiles to recipes.
+- `load-recipe.py`: File containing Lambda functions, handling recipe loading.
 - `personalize.py`: File linking user profiles to the recommendation system.
 - `search_for_recipes2.py`: File responsible for searching recipes within the application.
 
